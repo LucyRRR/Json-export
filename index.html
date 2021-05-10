@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Collabim-homework</title>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    </head>
+    <body>
+        <div>
+            <form id="write-input">
+                <input
+                    type="text"
+                    id="keywordInput"
+                    placeholder="Enter a keyword"
+                    size="30"
+                    autocomplete="off"
+                    autofocus="on"
+                />
+            </form>
+        </div>
+        <script>
+            function download(filename, text) {
+                var element = document.createElement("a");
+                element.setAttribute(
+                    "href",
+                    "data:text/plain;charset=utf-8," + encodeURIComponent(text)
+                );
+                element.setAttribute("download", filename);
+
+                element.style.display = "none";
+                document.body.appendChild(element);
+
+                element.click();
+
+                document.body.removeChild(element);
+            }
+
+            function downloadInput(response) {
+                download("result.json", JSON.stringify(response.data.items));
+            }
+            function search(input) {
+                let apiKey = "AIzaSyBcMqhrCkwFgYPyO9mjL4GqrmjKiitu4MU";
+                let searchId = "1f3448d78a16154a7";
+                let apiUrl = `https://www.googleapis.com/customsearch/v1?key=${apiKey}&cx=${searchId}&q=${input}`;
+                console.log(apiUrl);
+                axios.get(apiUrl).then(downloadInput);
+            }
+
+            function submitInput(event) {
+                event.preventDefault();
+                let theInput = document.querySelector("#keywordInput").value;
+                search(theInput);
+            }
+
+            let searchInput = document.querySelector("#write-input");
+            searchInput.addEventListener("submit", submitInput);
+        </script>
+    </body>
+</html>
