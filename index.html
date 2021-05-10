@@ -21,7 +21,10 @@
             </form>
         </div>
         <script>
-            function download(filename, text) {
+            function downloadResponse(response) {
+                let filename = "result.json";
+                let text = JSON.stringify(response.data.items);
+
                 var element = document.createElement("a");
                 element.setAttribute(
                     "href",
@@ -37,21 +40,18 @@
                 document.body.removeChild(element);
             }
 
-            function downloadInput(response) {
-                download("result.json", JSON.stringify(response.data.items));
-            }
             function search(input) {
                 let apiKey = "AIzaSyBcMqhrCkwFgYPyO9mjL4GqrmjKiitu4MU";
                 let searchId = "1f3448d78a16154a7";
                 let apiUrl = `https://www.googleapis.com/customsearch/v1?key=${apiKey}&cx=${searchId}&q=${input}`;
                 console.log(apiUrl);
-                axios.get(apiUrl).then(downloadInput);
+                axios.get(apiUrl).then(downloadResponse);
             }
 
             function submitInput(event) {
                 event.preventDefault();
-                let theInput = document.querySelector("#keywordInput").value;
-                search(theInput);
+                let input = document.querySelector("#keywordInput").value;
+                search(input);
             }
 
             let searchInput = document.querySelector("#write-input");
