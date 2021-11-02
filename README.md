@@ -1,7 +1,7 @@
 # Json-export
 
-This project is blank but there is an input for searching a keyword.
-By pressing enter, the page will download the first window search from google (json format).
+This project is blank besides the input for searching a keyword.
+By pressing enter, the page will download the first window you see as searching the keyword from google (json format).
 
 ## Available Scripts
 
